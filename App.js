@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Provider } from 'react-native-paper'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -10,11 +10,15 @@ import {
   ResetPasswordScreen,
   Dashboard,
 } from './src/screens'
+import GlobalContext from './src/context/GlobalContext'
+import { useContextData } from './src/context/useContext'
 
 const Stack = createStackNavigator()
 
-export default function App() {
+const Wrapper = () => {
+  const { axiosInstance,check } = useContext(GlobalContext)
   return (
+
     <Provider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator
@@ -34,5 +38,14 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
+  )
+}
+
+export default function App() {
+  const context = useContextData()
+  return (
+    <GlobalContext.Provider value={context}>
+      <Wrapper />
+    </GlobalContext.Provider>
   )
 }

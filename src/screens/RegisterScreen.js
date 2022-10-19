@@ -8,42 +8,51 @@ import Button from '../components/Button'
 import TextInput from '../components/TextInput'
 import BackButton from '../components/BackButton'
 import { theme } from '../core/theme'
-import { emailValidator } from '../helpers/emailValidator'
-// import { passwordValidator } from '../helpers/passwordValidator'
+
+import axios from 'axios';
+// const baseUrl = 'https://reqres.in';
+// axios({
+//   method: 'get',
+//   url: `${baseUrl}/api/users/1`,
+// }).then((response) => {
+//   console.log(response.data);
+// });
+
+
+// // Invoking get method to perform a GET request
+// axios.get(`${baseUrl}/api/users/1`).then((response) => {
+//   console.log(response.data);
+// });
+
 import { nameValidator } from '../helpers/nameValidator'
-import { rollValidator } from '../helpers/rollValidator'
-import { roomValidator } from '../helpers/roomValidator'
-import { mobileValidator } from '../helpers/mobileValidator'
+import { rollValidator } from '../helpers/rollValidator.js'
+import { roomValidator } from '../helpers/roomValidator.js'
+import { mobileValidator } from '../helpers/mobileValidator.js'
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState({ value: '', error: '' })
-  const [email, setEmail] = useState({ value: '', error: '' })
-  // const [password, setPassword] = useState({ value: '', error: '' })
   const [roll, setRoll] = useState({ value: '', error: '' })
   const [room, setRoom] = useState({ value: '', error: '' })
   const [mobile, setMobile] = useState({ value: '', error: '' })
   const [hostel, setHostel] = useState({ value: '', error: '' })
 
-  const onSignUpPressed = () => {
+  const onSignUpPressed = async(e) => {
+    console.log("hello");
     const nameError = nameValidator(name.value)
-    const emailError = emailValidator(email.value)
-    // const passwordError = passwordValidator(password.value)
     const rollError =rollValidator(roll.value)
     const roomError = roomValidator(room.value)
     const mobileError = mobileValidator(mobile.value)
-    // const hostelError = hostelValidator(hostel.value)
-    console.log(nameError,emailError,rollError,roomError,mobileError,hoatelError)
-    if ( nameError || rollError || roomError || mobileError || hostelError ) {
+    console.log("hello");
+    if ( nameError || rollError || roomError || mobileError ) {
       setName({ ...name, error: nameError })
-      setEmail({ ...email, error: emailError })
-      // setPassword({ ...password, error: passwordError })
-      setRoll({ ...roll, error: passwordError })
+      setRoll({ ...roll, error: rollError })
       setHostel({ ...hostel, error: "" })
-      setMobile({ ...mobile, error: passwordError })
-      setRoom({ ...room, error: passwordError })
+      setMobile({ ...mobile, error: mobileError })
+      setRoom({ ...room, error: roomError })
 
       return
     }
+    
     navigation.reset({
       index: 0,
       routes: [{ name: 'Dashboard' }],
@@ -66,14 +75,10 @@ export default function RegisterScreen({ navigation }) {
       <TextInput
         label="Roll No."
         returnKeyType="next"
-        value={email.value}
-        onChangeText={(text) => setEmail({ value: text, error: '' })}
-        error={!!email.error}
-        errorText={email.error}
-        // autoCapitalize="none"
-        // autoCompleteType="email"
-        // textContentType="emailAddress"
-        // keyboardType="email-address"
+        value={roll.value}
+        onChangeText={(text) => setRoll({ value: text, error: '' })}
+        error={!!roll.error}
+        errorText={roll.error}
       />
       <TextInput
         label="Hostel Name"
@@ -99,15 +104,6 @@ export default function RegisterScreen({ navigation }) {
         error={!!mobile.error}
         errorText={mobile.error}
       />
-      {/* <TextInput
-        label="Password"
-        returnKeyType="done"
-        value={password.value}
-        onChangeText={(text) => setPassword({ value: text, error: '' })}
-        error={!!password.error}
-        errorText={password.error}
-        secureTextEntry
-      /> */}
       <Button
         mode="contained"
         onPress={onSignUpPressed}
