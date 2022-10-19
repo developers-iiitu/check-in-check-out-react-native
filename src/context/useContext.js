@@ -4,7 +4,7 @@ import { useState } from "react"
 export const useContextData = () => {
 
     const axiosInstance = axios.create({
-        baseURL: 'http://localhost:4000',
+        baseURL: 'https://check-in-check-out-backend.up.railway.app',
         headers: {
             "x-auth-token": 'token',
             "Content-Type": "application/json",

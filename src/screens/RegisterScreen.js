@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from '../components/Background'
@@ -28,6 +28,7 @@ import { nameValidator } from '../helpers/nameValidator'
 import { rollValidator } from '../helpers/rollValidator.js'
 import { roomValidator } from '../helpers/roomValidator.js'
 import { mobileValidator } from '../helpers/mobileValidator.js'
+import GlobalContext from '../context/GlobalContext'
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState({ value: '', error: '' })
@@ -35,15 +36,15 @@ export default function RegisterScreen({ navigation }) {
   const [room, setRoom] = useState({ value: '', error: '' })
   const [mobile, setMobile] = useState({ value: '', error: '' })
   const [hostel, setHostel] = useState({ value: '', error: '' })
+  const { axiosInstance } = useContext(GlobalContext);
+  const onSignUpPressed = async (e) => {
 
-  const onSignUpPressed = async(e) => {
-    console.log("hello");
     const nameError = nameValidator(name.value)
-    const rollError =rollValidator(roll.value)
+    const rollError = rollValidator(roll.value)
     const roomError = roomValidator(room.value)
     const mobileError = mobileValidator(mobile.value)
-    console.log("hello");
-    if ( nameError || rollError || roomError || mobileError ) {
+
+    if (nameError || rollError || roomError || mobileError) {
       setName({ ...name, error: nameError })
       setRoll({ ...roll, error: rollError })
       setHostel({ ...hostel, error: "" })
@@ -52,11 +53,23 @@ export default function RegisterScreen({ navigation }) {
 
       return
     }
-    
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Dashboard' }],
-    })
+    console.log(room);
+
+    try {
+      const res = await axiosInstance.post("/api/user/student/create", { roomNumber: room.value, hostelName: hostel.value, phone: mobile.value, rollNo: roll.value, name: name.value });
+      console.log(res.data);
+      alert(res.data.msg);
+    } catch (error) {
+      console.log(error);
+      console.log(error.response.status);
+      if (error.response.status === 400) {
+        console.log("Helllllo")
+        alert(error.response.data.msg);
+      }
+
+
+    }
+
   }
 
   return (
