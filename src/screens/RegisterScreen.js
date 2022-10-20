@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from '../components/Background'
 import Logo from '../components/Logo'
@@ -44,10 +44,9 @@ export default function RegisterScreen({ navigation }) {
       console.log(res.data);
       alert(res.data.msg);
     } catch (error) {
-      console.log(error);
-      console.log(error.response.status);
+      
       if (error.response.status === 400) {
-        console.log("Helllllo")
+        
         alert(error.response.data.msg);
       }
 
@@ -58,8 +57,10 @@ export default function RegisterScreen({ navigation }) {
 
   return (
     <Background>
+      
       <BackButton goBack={navigation.goBack} />
       <Logo />
+      
       <Header>Create Account</Header>
       <TextInput
         label="Name"
@@ -127,4 +128,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: theme.colors.primary,
   },
+  scrollView: {
+    marginHorizontal: 20,
+  }
 })
+
