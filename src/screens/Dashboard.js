@@ -1,30 +1,31 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Background from '../components/Background'
 import Logo from '../components/Logo'
 import Header from '../components/Header'
 import Paragraph from '../components/Paragraph'
 import Button from '../components/Button'
+import GlobalContext from '../context/GlobalContext'
+import Student from './Student'
+import GateGuard from './GateGuard'
+import Admin from './Admin'
 
 export default function Dashboard({ navigation }) {
+  const { auth, user } = useContext(GlobalContext);
+
   return (
     <Background>
-      <Logo />
-      <Header>Lets start</Header>
-      <Paragraph>
-        Your amazing app starts here. Open you favorite code editor and start
-        editing this project.
-      </Paragraph>
-      <Button
-        mode="outlined"
-        onPress={() =>
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'StartScreen' }],
-          })
-        }
-      >
-        Logout
-      </Button>
+      {
+        user.role === 2 && <Student />
+      }
+      {
+        user.role === 1 && <GateGuard />
+      }
+      {
+        user.role === 0 && <Admin />
+      } 
     </Background>
   )
 }
+
+
+

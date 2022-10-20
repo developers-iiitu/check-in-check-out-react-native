@@ -8,22 +8,6 @@ import Button from '../components/Button'
 import TextInput from '../components/TextInput'
 import BackButton from '../components/BackButton'
 import { theme } from '../core/theme'
-
-import axios from 'axios';
-// const baseUrl = 'https://reqres.in';
-// axios({
-//   method: 'get',
-//   url: `${baseUrl}/api/users/1`,
-// }).then((response) => {
-//   console.log(response.data);
-// });
-
-
-// // Invoking get method to perform a GET request
-// axios.get(`${baseUrl}/api/users/1`).then((response) => {
-//   console.log(response.data);
-// });
-
 import { nameValidator } from '../helpers/nameValidator'
 import { rollValidator } from '../helpers/rollValidator.js'
 import { roomValidator } from '../helpers/roomValidator.js'

@@ -2,9 +2,17 @@ import { createContext } from "react";
 
 const GlobalContext = createContext({
     axiosInstance: undefined,
-    check: "",
+    machineId: "",
+    setMachineId: () => { },
     count: 1,
-    setCount: () => { }
+    setCount: () => { },
+    geoLocation: "",
+    setGeoLocation: () => { },
+    setMachineConfigs: () => { },
+    user:null,
+    setUser:()=>{},
+    auth:false,
+    setAuth:()=>{}
 })
 
 export default GlobalContext
