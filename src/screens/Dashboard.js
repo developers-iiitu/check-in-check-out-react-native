@@ -7,7 +7,7 @@ import Admin from './Admin'
 
 export default function Dashboard({ navigation }) {
   const { auth, user } = useContext(GlobalContext);
-
+  console.log(user);
   return (
     <Background>
       {

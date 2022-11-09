@@ -13,7 +13,7 @@ const onLoad = async (setMachineId,setGeoLocation)=>{
     );
 
    try {
-    let res= await axios.get("https://ipapi.co/json/");
+    let res= await axios.get("http://ipwho.is/");
     setGeoLocation(()=>
         JSON.stringify(res.data)
     )

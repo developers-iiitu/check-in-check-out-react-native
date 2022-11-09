@@ -8,8 +8,10 @@ import Wrapper from './Wrapper'
 export default function App() {
   const context = useContextData()
   return (
+    <React.StrictMode>
     <GlobalContext.Provider value={context}>
       <Wrapper />
     </GlobalContext.Provider>
+    </React.StrictMode>
   )
 }

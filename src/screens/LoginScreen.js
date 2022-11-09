@@ -11,9 +11,10 @@ import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
 import GlobalContext from '../context/GlobalContext'
+import { storeData } from '../asyncStorage/storageFunctions'
 
 export default function LoginScreen({ navigation }) {
-  const { geoLocation, machineId,axiosInstance,setAuth,setUser,auth } = useContext(GlobalContext);
+  const { geoLocation, machineId,axiosInstance,setAuth,setUser,setAccessToken,setRefreshToken } = useContext(GlobalContext);
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
 
@@ -28,10 +29,12 @@ export default function LoginScreen({ navigation }) {
     }
     try {
       let res = await axiosInstance.post("/api/session/create",{email:email.value,password:password.value,machineId:machineId,geoLocation:geoLocation});
-      alert(res.data.msg);
       setAuth(()=>true);
-      alert(auth);
       setUser(()=>res.data.userData);
+      setAccessToken(()=>res.data.accessToken);
+      setRefreshToken(()=>res.data.refreshToken);
+      storeData("refreshToken",res.data.refreshToken);
+      console.log(res.data);
       navigation.reset({
         index: 0,
         routes: [{ name: 'Dashboard' }],

@@ -2,51 +2,60 @@ import axios from "axios"
 import { useState } from "react"
 import { getData, storeData } from "../asyncStorage/storageFunctions"
 import uuid from 'react-native-uuid';
+import {DevSettings} from 'react-native';
 
 export const useContextData = () => {
 
     const axiosInstance = axios.create({
-        baseURL: 'https://check-in-check-out-backend.up.railway.app',
+        baseURL: 'http://192.168.137.1:4000',
         headers: {
             "x-auth-token": 'token',
             "Content-Type": "application/json",
         },
     })
 
-    let check = '12'
+   
     let [machineId, setMachineId] = useState("")
-    const [count, setCount] = useState(1)
     let [geoLocation, setGeoLocation] = useState("")
     let [auth,setAuth]=useState(false);
     let [user,setUser]=useState(null);
-
-    const setMachineConfigs = async () => {
-        let machineId = await getData("machineId");
-        if (machineId === null) {
-            machineId = uuid.v4();
-            storeData("machineId", machineId);
+    let [refreshToken,setRefreshToken]=useState(null);
+    let [accessToken,setAccessToken]=useState(null);
+    let setMachineConfigs = async () =>{
+        let machineIdL = await getData("machineId");
+        if(machineIdL===null){
+            machineIdL=uuid.v4();
+            storeData("machineId",machineIdL);
         }
-        console.log(machineId);
-        setMachineId(() => machineId);
-
+       
+        setMachineId(()=>
+            machineIdL
+        );
+        let refreshTokenL = await getData("accessToken");
+        if(refreshTokenL!==null){
+            setRefreshToken(()=>refreshTokenL)
+            // auto login
+        }
         try {
-            let res = await axios.get("http://ipwho.is/");
-            console.log(res.data)
-            setGeoLocation(() => JSON.stringify(res.data))
+            const res = await axios.get("http://ipwho.is/");
+            
+            setGeoLocation(()=>JSON.stringify(res.data))
+           
         } catch (error) {
-            console.log(error.response.data);
+            console.log(error);
+            DevSettings.reload("Geo Location Not found");
         }
-
+       
     }
 
     return {
         axiosInstance,
-        check,
-        count, setCount,
         machineId, setMachineId,
         geoLocation, setGeoLocation,
         setMachineConfigs,
         auth,setAuth,
-        user,setUser
+        user,setUser,
+        accessToken,setAccessToken,
+        refreshToken,setRefreshToken
     }
 }
