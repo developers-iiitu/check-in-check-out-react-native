@@ -40,7 +40,7 @@ export default function LoginScreen({ navigation }) {
         routes: [{ name: 'Dashboard' }],
       })
     } catch (error) {
-      alert(error.response.data.msg);
+      alert(error.response);
     }
   }
 

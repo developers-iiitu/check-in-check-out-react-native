@@ -1,6 +1,7 @@
 {
   "expo": {
-    "name": "check-in-check-out",
+    "name": "Gate Entery",
+    "description": "Check in check out",
     "slug": "check-in-check-out",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,9 +19,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist":{
+        "NSFaceIDUsageDescription": "To use Face ID and touch ID to verify"
+      }
     },
     "android": {
+      "package": "com.iiitu.gateentery",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

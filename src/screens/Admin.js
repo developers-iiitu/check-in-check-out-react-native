@@ -1,5 +1,5 @@
-import { Text } from "react-native";
-import { View } from "react-native-web";
+import { Text ,View} from "react-native";
+
 
 
 export default function Admin (){

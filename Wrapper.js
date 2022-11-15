@@ -19,7 +19,7 @@ const Wrapper = () => {
     const { axiosInstance, setMachineId, setGeoLocation, machineId, geoLocation, setMachineConfigs } = useContext(GlobalContext)
     useEffect(() => {
         setMachineConfigs();
-    }, [])
+    },[])
 
     return (
 
