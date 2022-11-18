@@ -20,9 +20,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "infoPlist":{
+      "infoPlist": {
         "NSFaceIDUsageDescription": "To use Face ID and touch ID to verify"
-      }
+      },
+      "bundleIdentifier": "com.iiitu.gateentery"
     },
     "android": {
       "package": "com.iiitu.gateentery",

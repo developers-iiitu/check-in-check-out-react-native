@@ -7,15 +7,15 @@ import {DevSettings} from 'react-native';
 export const useContextData = () => {
 
     const axiosInstance = axios.create({
-        baseURL: 'https://check-in-check-out-backend.up.railway.app/',
+        baseURL: 'http://10.0.4.30:4000',
         headers: {
-            "x-auth-token": 'token',
             "Content-Type": "application/json",
         },
     })
 
    
     let [machineId, setMachineId] = useState("")
+    let [purpose, setPurpose] = useState([]);
     let [geoLocation, setGeoLocation] = useState("")
     let [auth,setAuth]=useState(false);
     let [user,setUser]=useState(null);
@@ -27,7 +27,12 @@ export const useContextData = () => {
             machineIdL=uuid.v4();
             storeData("machineId",machineIdL);
         }
-       
+       let purposeL = await getData("purpose");
+         if(purposeL!==null){
+            purposeL=JSON.parse(purposeL);
+            setPurpose(()=>purposeL.data);
+         }
+        
         setMachineId(()=>
             machineIdL
         );
@@ -56,6 +61,7 @@ export const useContextData = () => {
         auth,setAuth,
         user,setUser,
         accessToken,setAccessToken,
-        refreshToken,setRefreshToken
+        refreshToken,setRefreshToken,
+        purpose,setPurpose
     }
 }

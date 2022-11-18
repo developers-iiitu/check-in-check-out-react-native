@@ -1,5 +1,5 @@
 import React from 'react'
-import { ImageBackground, StyleSheet, KeyboardAvoidingView,KeybrdAvoidingView } from 'react-native'
+import { ImageBackground, StyleSheet, KeyboardAvoidingView, Dimensions } from 'react-native'
 import { theme } from '../core/theme'
 
 export default function Background({ children }) {
@@ -10,8 +10,10 @@ export default function Background({ children }) {
       style={styles.background}
     >
 
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <KeyboardAvoidingView style={styles.container} behavior="height">
+        
         {children}
+      
       </KeyboardAvoidingView>
     </ImageBackground>
   )
@@ -20,16 +22,16 @@ export default function Background({ children }) {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    width: '100%',
+    width: "100%",
     backgroundColor: theme.colors.surface,
   },
   container: {
     flex: 1,
     padding: 20,
-    width: '100%',
-    maxWidth: 340,
+    width: "100%",
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  
 })

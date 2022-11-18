@@ -14,7 +14,9 @@ const GlobalContext = createContext({
     refreshToken:null,
     setRefreshToken:()=>{},
     accessToken:null,
-    setAccessToken:()=>{}
+    setAccessToken:()=>{},
+    purpose:[],
+    setPurpose:()=>{},
 })
 
 export default GlobalContext

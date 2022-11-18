@@ -12,14 +12,15 @@ import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
 import GlobalContext from '../context/GlobalContext'
 import { storeData } from '../asyncStorage/storageFunctions'
+import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 
 export default function LoginScreen({ navigation }) {
   const { geoLocation, machineId,axiosInstance,setAuth,setUser,setAccessToken,setRefreshToken } = useContext(GlobalContext);
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
-
+  const [loading,setLoading] = useState(false);
   const onLoginPressed = async () => {
-    
+    setLoading(true);
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
     if (emailError || passwordError) {
@@ -35,12 +36,27 @@ export default function LoginScreen({ navigation }) {
       setRefreshToken(()=>res.data.refreshToken);
       storeData("refreshToken",res.data.refreshToken);
       console.log(res.data);
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Dashboard' }],
-      })
+      setLoading(false);
+      if(res.data.userData.role === 2){
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'StudentHome' }],
+        })
+      }else if(res.data.userData.role === 1){
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'GateGuardHome' }],
+        })
+      }else{
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'AdminHome' }],
+        })
+      }
+      
     } catch (error) {
-      alert(error.response);
+      setLoading(false);
+      alert(error.response.data.msg);
     }
   }
 
@@ -77,9 +93,10 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
-      <Button mode="contained" onPress={onLoginPressed}>
+      {loading?<ActivityIndicator animating={true} color={MD2Colors.blue500} />:<Button mode="contained" onPress={onLoginPressed}>
         Login
-      </Button>
+      </Button>}
+     
       <View style={styles.row}>
         <Text>Don’t have an account? </Text>
         <TouchableOpacity onPress={() => navigation.replace('RegisterScreen')}>
