@@ -7,7 +7,7 @@ import {DevSettings} from 'react-native';
 export const useContextData = () => {
 
     const axiosInstance = axios.create({
-        baseURL: 'http://10.0.4.30:4000',
+        baseURL: 'http://192.168.137.98:4000',
         headers: {
             "Content-Type": "application/json",
         },

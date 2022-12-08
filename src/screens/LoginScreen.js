@@ -56,7 +56,7 @@ export default function LoginScreen({ navigation }) {
       
     } catch (error) {
       setLoading(false);
-      alert(error.response.data.msg);
+      alert(error.toString());
     }
   }
 

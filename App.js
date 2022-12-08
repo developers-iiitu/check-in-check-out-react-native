@@ -6,7 +6,7 @@ import { useContextData } from './src/context/useContext'
 import Wrapper from './Wrapper'
 
 export default function App() {
-  usePreventScreenCapture();
+  // usePreventScreenCapture();
   const context = useContextData()
   return (
     
